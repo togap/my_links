@@ -1,0 +1,15 @@
+<!Doctype html>
+<html lang="es">
+    <head>
+	<meta charset="utf-8">
+	<title>Links</title>
+    </head>
+    <body>
+	<h1>Links</h1>
+	<ul>
+	    {% for link in links %}
+	    <li><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></li>
+	    {% endfor %}
+	<ul>
+    </body>
+</html>
