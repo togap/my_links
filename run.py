@@ -14,13 +14,18 @@ def index():
 def new_link():
     if request.method == 'POST':
         url = request.form['url']
-        user = User.query.filter_by(id=1).first()
+        user = User.query.get(1)
         link = Link(url, user)
         db.session.add(link)
         db.session.commit()
         return "Success"
         
     return render_template('links/new.html')
+
+@app.route('/links')
+def links():
+    links = Link.query.filter_by(user_id=1).all()
+    return render_template('links/list.html', links=links)
 
 if __name__ == '__main__':
     app.run()
