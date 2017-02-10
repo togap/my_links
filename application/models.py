@@ -42,6 +42,7 @@ class User(db.Model):
 
 class Link(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200))
     url = db.Column(db.Text)
     state = db.Column(db.Boolean)
     favorite = db.Column(db.Boolean)
@@ -53,7 +54,8 @@ class Link(db.Model):
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
-    def __init__(self, url, user):
+    def __init__(self, title, url, user):
+        self.title = title
         self.url = url
         self.user = user
         self.state = False
