@@ -1,8 +1,10 @@
 import settings
 from application import create_app
-from flask import render_template, request
+from flask import render_template, request, redirect
 from application.models import User, Link
 from application.models import db
+from lxml import html, etree
+import requests
 
 app = create_app(settings)
 
@@ -14,11 +16,14 @@ def index():
 def new_link():
     if request.method == 'POST':
         url = request.form['url']
-        user = User.query.get(1)
-        link = Link(url, user)
+        page = requests.get(url)
+        text = html.fromstring(page.content)
+        title = text.xpath('//head/title/text()')
+        user = User.query.filter_by(id=1).first()
+        link = Link(title[0], url, user)
         db.session.add(link)
         db.session.commit()
-        return "Success"
+        return redirect('/links')
         
     return render_template('links/new.html')
 
