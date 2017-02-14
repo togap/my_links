@@ -1,0 +1,18 @@
+<!Doctype html>
+<html lang="es">
+    <head>
+	<meta charset="utf-8">
+	<title>{{ link.title }}</title>
+    </head>
+    <body>
+	<h1>{{ link.title }}</h1>
+	<p><a href="{{ link.url }}">{{ link.url }}</a></p>
+	<ul>
+	    {% for tag in link.tags %}
+		<li>{{ tag.name }}</li>
+	    {% else %}
+	    	<p>No tiene etiquetas asignadas</p>
+	    {% endfor %}
+	</ul>
+    </body>
+</html>

@@ -64,7 +64,7 @@ class Link(db.Model):
         self.updated = None
 
     def __repr__(self):
-        return self.url
+        return self.title
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -78,6 +78,8 @@ class Tag(db.Model):
     def __init__(self, name, user):
         self.name = name
         self.user = user
+        self.created = datetime.now()
+        self.updated = None
 
     def __repr__(self):
         return self.name

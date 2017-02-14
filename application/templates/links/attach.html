@@ -1,0 +1,21 @@
+<!Doctype html>
+<html lang="es">
+    <head>
+	<meta charset="utf-8">
+	<title>Attach Tag</title>
+    </head>
+    <body>
+	<h1>Add Tag</h1>
+	<form action="{{ url_for('attach_tag', id=link.id) }}" method="post">
+	    <input type="text" placeholder="copy your link" required name="tag">
+	    <button type="submit">add</button>
+	</form>
+	<section>
+	    <ul>
+	    	{% for tag in link.tags %}
+		    <li>{{ tag.name }}</li>
+	    	{% endfor %}
+	    </ul>
+	</section>
+    </body>
+</html>
