@@ -50,7 +50,7 @@ class Link(db.Model):
     user = db.relationship('User',
             backref=db.backref('links', lazy='dynamic'))
     tags = db.relationship('Tag', secondary=tags,
-            backref=db.backref('links', lazy='dynamic'))
+            back_populates='links')
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
@@ -72,6 +72,8 @@ class Tag(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User',
             backref=db.backref('tags', lazy='dynamic'))
+    links = db.relationship('Link', secondary=tags,
+            back_populates='tags')
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
