@@ -1,0 +1,15 @@
+<!Doctype html>
+<html lang="es">
+    <head>
+	<meta charset="utf-8">
+	<title>Tags</title>
+    </head>
+    <body>
+	<h1>Tags</h1>
+	<ul>
+	    {% for tag in tags %}
+	    <li>{{ tag.name }} <strong>({{ tag.links | length }})</strong></li>
+	    {% endfor %}
+	</ul>
+    </body>
+</html>

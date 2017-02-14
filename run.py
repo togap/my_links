@@ -60,5 +60,10 @@ def attach_tag(id):
 
     return render_template('links/attach.html', link=link)
 
+@app.route('/tags')
+def tags():
+    tags = Tag.query.filter_by(user_id=1).all()
+    return render_template('tags/list.html', tags=tags)
+
 if __name__ == '__main__':
     app.run()
