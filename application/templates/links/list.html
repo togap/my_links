@@ -10,7 +10,6 @@
 	    {% for link in links %}
 	    <li>
 		<h4><a href="{{ url_for('detail_link', id=link.id) }}">{{ link.title }}</a></h4>
-		<a href="{{ link.url }}" target="_blank">{{ link.url }}</a> 
 		<a href="{{ url_for('edit', id=link.id) }}">edit</a> 
 		<a href="{{ url_for('attach_tag', id=link.id) }}">add tag</a>
 	    </li>
