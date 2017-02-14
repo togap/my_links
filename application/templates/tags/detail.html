@@ -1,0 +1,19 @@
+<!Doctype htlm>
+<html>
+    <head>
+	<meta charset="utf-8">
+	<title>{{ tag.name }}</title>
+    </head>
+    <body>
+	<h1>{{ tag.name }}</h1>
+	<ul>
+	    {% for link in tag.links %}
+	    	<li>
+		    <a href="{{ url_for('detail_link', id=link.id) }}">
+			{{ link.title }}
+		    </a>
+		</li>
+	    {% endfor %}
+	</ul>
+    </body>
+</html>

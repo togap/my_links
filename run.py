@@ -65,5 +65,10 @@ def tags():
     tags = Tag.query.filter_by(user_id=1).all()
     return render_template('tags/list.html', tags=tags)
 
+@app.route('/tags/<int:id>')
+def detail_tag(id):
+    tag = Tag.query.get(id)
+    return render_template('tags/detail.html', tag=tag)
+
 if __name__ == '__main__':
     app.run()
