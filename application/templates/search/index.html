@@ -1,0 +1,23 @@
+<!Doctype html>
+<html lang="es">
+    <head>
+	<meta charset="utf-8">
+	<title>Search</title>
+    </head>
+    <body>
+	<h1>Search</h1>
+	<form method="post" action="{{ url_for('search') }}">
+	    <input type="text" placeholder="words, tags" name="search">
+	    <button type="submit">search</button>
+	</form>
+	<section>
+	    <ul>
+		{% for link in links %}
+	    	    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+		{% else %}
+		    <li>nothing</li>
+		{% endfor %}
+	    </ul>
+	</section>
+    </body>
+</html>
