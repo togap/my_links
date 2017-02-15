@@ -47,7 +47,6 @@ def attach_tag(id):
     link = Link.query.get(id)
     if request.method == 'POST':
         user = User.query.filter_by(id=1).first()
-        print(link)
         name = request.form['tag']
         tag = Tag.query.filter_by(name=name.lower()).first()
         if tag is None:
@@ -69,6 +68,19 @@ def tags():
 def detail_tag(id):
     tag = Tag.query.get(id)
     return render_template('tags/detail.html', tag=tag)
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        search = request.form['search']
+        tag = Tag.query.filter_by(name=search.lower()).first()
+        if tag is None:
+            links = Link.query.filter(
+                    Link.title.ilike('%' + search + '%')).all()
+        else:
+            links = tag.links
+        return render_template('search/index.html', links=links)
+    return render_template('search/index.html')
 
 if __name__ == '__main__':
     app.run()
