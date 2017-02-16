@@ -1,0 +1,19 @@
+<!Doctype html>
+<html lang="es">
+    <head>
+	<meta charset="utf-8">
+	<title>{{ link.title }}</title>
+    </head>
+    <body>
+	<h1>{{ link.title }}</h1>
+	<p><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></p>
+	<ul>
+	    {% for tag in link.tags %}
+	    	<li>{{ tag.name }} <a href="{{ url_for('delete_link_tag',link_id=link.id, tag_id=tag.id) }}">delete</a></li>
+	    {% else %}
+	    	<p>No tiene etiquetas asignadas</p>
+	    {% endfor %}
+	</ul>
+	<a href="{{ url_for('links') }}">back</a>
+    </body>
+</html>
