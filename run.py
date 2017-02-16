@@ -40,7 +40,16 @@ def detail_link(id):
 @app.route('/edit/<int:id>')
 def edit(id):
     link = Link.query.get(id)
-    return link
+    return render_template('links/edit.html', link=link)
+
+@app.route('/links/<int:link_id>/tags/<int:tag_id>/delete')
+def delete_link_tag(link_id, tag_id):
+    tag = Tag.query.get(tag_id)
+    link = Link.query.get(link_id)
+    link.tags.remove(tag)
+    db.session.add(link)
+    db.session.commit()
+    return render_template('links/edit.html', link=link)
 
 @app.route('/links/<int:id>/attach', methods=['GET', 'POST'])
 def attach_tag(id):
