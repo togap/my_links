@@ -1,20 +1,24 @@
-<!Doctype html>
-<html lang="es">
-    <head>
-	<meta charset="utf-8">
-	<title>Links</title>
-    </head>
-    <body>
-	<h1>Links</h1>
-	<ul>
-	    {% for link in links %}
-	    <li>
-		<h4><a href="{{ url_for('detail_link', id=link.id) }}">{{ link.title }}</a></h4>
-		<a href="{{ url_for('edit', id=link.id) }}">edit</a> 
-		<a href="{{ url_for('attach_tag', id=link.id) }}">add tag</a>
-	    </li>
-	    {% endfor %}
-	</ul>
-	<a href="{{ url_for('index') }}">back</a>
-    </body>
-</html>
+{% extends "index.html" %}
+{% block title %}Links{% endblock %}
+{% block header %}My list{% endblock %}
+{% block content %}
+    <div class="row">
+    {% for link in links %}
+        <div class="columns small-12">
+	    <div class="callout">
+	        <h5><a href="{{ url_for('detail_link', id=link.id) }}">{{ link.title }}</a></h5>
+	        <p>
+		    <a class="hollow button warning" href="{{ url_for('edit', id=link.id) }}">
+		        <span class="show-for-sr">edit</span>
+	 	        <span aria-hidden="true"><i class="fi-pencil"></i></span>
+		    </a>
+	            <a class="hollow button success" href="{{ url_for('attach_tag', id=link.id) }}">
+		        <span class="show-for-sr">add tag</span>
+		        <span aria-hidden="true"><i class="fi-pricetag-multiple"></i></span>
+		    </a>
+	        </p>
+	    </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
