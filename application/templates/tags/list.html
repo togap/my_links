@@ -7,8 +7,10 @@
 	    <ul class="no-bullet">
 	        {% for tag in tags %}
 	            <li>
-			<a href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a> 
-			<span class="badge">{{ tag.links | length }}</span>
+			<span class="label success">
+			    <a href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a>
+			</span>
+			<span class="badge success">{{ tag.links | length }}</span>
 			<span class="show-for-sr">links</span>
 		    </li>
 	        {% endfor %}

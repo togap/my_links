@@ -21,7 +21,9 @@
 	                <p>
 			    <a href="{{ link.url }}"><small>{{ link.url }}</small></a> 
 			    {% for tag in link.tags %}
-			        <span class="label secondary"><small>{{ tag.name }}</small></span>
+			        <span class="label success">
+				    <a href="{{ url_for('detail_tag', id=tag.id) }}"><small>{{ tag.name }}</small></a>
+				</span>
 			    {% endfor %}
 	                </p>
 	            </div>
