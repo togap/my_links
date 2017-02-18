@@ -2,7 +2,7 @@
 <html lang="es">
     <head>
 	<meta charset="UTF-8">
-	<title>My Links {% block title %}{% endblock %}</title>
+	<title>My Links | {% block title %}{% endblock %}</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='bower_components/foundation-sites/dist/css/foundation.min.css') }}" />
 	<link rel="stylesheet" href="{{ url_for('static', filename='bower_components/foundation-icon-fonts/foundation-icons.css') }}" />
 	<script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
@@ -31,10 +31,17 @@
 	</nav>
 	<div class="section">
 	    <div class="row">
-	        <h2>{% block header %}{% endblock %}</h2>
+		<div class="columns small-12 medium-8 medium-offset-2">
+	            <h2>{% block header %}{% endblock %}</h2>
+		</div>
 	    </div>
-	    {% block content %}{% endblock %}
+	    <div class="row">
+		<div class="columns small-12 medium-8 medium-offset-2">
+	            {% block content %}{% endblock %}
+		</div>
+	    </div>
 	<div>
+	<footer></footer>
 	<script>
 	    $(document).foundation();
 	</script>
