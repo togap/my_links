@@ -63,6 +63,13 @@ def attach_tag(id):
 
     return render_template('links/attach.html', link=link)
 
+@app.route('/links/<int:id>/delete')
+def delete_link(id):
+    link = Link.query.get(id)
+    db.session.delete(link)
+    db.session.commit()
+    return redirect('/links')
+
 @app.route('/tags')
 def tags():
     tags = Tag.query.filter_by(user_id=1).all()

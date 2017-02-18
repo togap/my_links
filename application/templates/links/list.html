@@ -9,7 +9,7 @@
 		    <div class="callout">
 			<p>
 			    <strong>{{ link.title }}</strong>
-		            <a class="hollow button warning float-right" href="">
+			    <a class="hollow button warning float-right" href="{{ url_for('delete_link', id=link.id) }}">
 				<span class="show-for-sr">delete</span>
 	 	                <span aria-hidden="true"><i class="fi-trash"></i></span>
 		            </a>
