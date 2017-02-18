@@ -10,7 +10,7 @@ app = create_app(settings)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect('/links')
 
 @app.route('/links/new', methods=['GET', 'POST'])
 def new_link():

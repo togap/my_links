@@ -9,9 +9,9 @@
 		    <div class="callout">
 			<p>
 			    <strong>{{ link.title }}</strong>
-		            <a class="hollow button warning float-right" href="{{ url_for('edit', id=link.id) }}">
-		                <span class="show-for-sr">edit</span>
-	 	                <span aria-hidden="true"><i class="fi-pencil"></i></span>
+		            <a class="hollow button warning float-right" href="">
+				<span class="show-for-sr">delete</span>
+	 	                <span aria-hidden="true"><i class="fi-trash"></i></span>
 		            </a>
 	                    <a class="hollow button success float-right" href="{{ url_for('attach_tag', id=link.id) }}">
 		                <span class="show-for-sr">add tag</span>
