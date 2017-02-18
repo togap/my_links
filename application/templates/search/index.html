@@ -12,14 +12,12 @@
 		    <div class="columns small-3">
 	        	<button type="submit" class="button primary hollow expanded">search</button>
 		    </div>
+		</div>
 	    </form>
-	    <section>
-	    </section>
 	</div>
     </div>
     <div class="row">
 	<div class="columns small-12">
-	<p>
 	    {% for link in links %}
 	    	<a href="{{ url_for('detail_link', id=link.id) }}">
 		    <div class="callout">
@@ -37,9 +35,8 @@
 		    </div>
 		</a>
 	    {% else %}
-		nothing
+	        <p>nothing</p>
 	    {% endfor %}
-	</p>
 	</div>
     </div>
 {% endblock %}
