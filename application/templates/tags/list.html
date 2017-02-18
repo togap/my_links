@@ -1,16 +1,18 @@
-<!Doctype html>
-<html lang="es">
-    <head>
-	<meta charset="utf-8">
-	<title>Tags</title>
-    </head>
-    <body>
-	<h1>Tags</h1>
-	<ul>
-	    {% for tag in tags %}
-	    <li><a href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a> <strong>({{ tag.links | length }})</strong></li>
-	    {% endfor %}
-	</ul>
-	<a href="{{ url_for('index') }}">back</a>
-    </body>
-</html>
+{% extends "index.html" %}
+{% block title %}Tags{% endblock %}
+{% block header %}My Tags{% endblock %}
+{% block content %}
+    <div class="row">
+	<div class="columns small-12">
+	    <ul class="no-bullet">
+	        {% for tag in tags %}
+	            <li>
+			<a href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a> 
+			<span class="badge">{{ tag.links | length }}</span>
+			<span class="show-for-sr">links</span>
+		    </li>
+	        {% endfor %}
+	    </ul>
+	</div>
+    </div>
+{% endblock %}
