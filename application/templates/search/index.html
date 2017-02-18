@@ -1,24 +1,45 @@
-<!Doctype html>
-<html lang="es">
-    <head>
-	<meta charset="utf-8">
-	<title>Search</title>
-    </head>
-    <body>
-	<h1>Search</h1>
-	<form method="post" action="{{ url_for('search') }}">
-	    <input type="text" placeholder="words, tags" name="search">
-	    <button type="submit">search</button>
-	</form>
-	<section>
-	    <ul>
-		{% for link in links %}
-	    	    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-		{% else %}
-		    <li>nothing</li>
-		{% endfor %}
-	    </ul>
-	</section>
-	<a href="{{ url_for('index') }}">back</a>
-    </body>
-</html>
+{% extends "index.html" %}
+{% block title %}Search{% endblock %}
+{% block header %}Serch{% endblock %}
+{% block content %}
+    <div class="row">
+	<div class="columns small-12">
+	    <form method="post" action="{{ url_for('search') }}">
+		<div class="row">
+		    <div class="columns small-9">
+	        	<input type="text" placeholder="words, tags" name="search">
+		    </div>
+		    <div class="columns small-3">
+	        	<button type="submit" class="button primary">search</button>
+		    </div>
+	    </form>
+	    <section>
+	    </section>
+	</div>
+    </div>
+    <div class="row">
+	<div class="columns small-12">
+	<p>
+	    {% for link in links %}
+	    	<a href="{{ url_for('detail_link', id=link.id) }}">
+		    <div class="callout">
+			<p><strong>{{ link.title }}</strong></p>
+			<p>
+			    <a href="{{ link.url }}"><small>{{ link.url }}</small></a>
+			    {% for tag in link.tags %}
+				<span class="label success">
+				    <a href="{{ url_for('detail_tag', id=tag.id) }}">
+					<small>{{ tag.name }}</small>
+				    </a>
+				</span>
+			    {% endfor %}
+			</p>
+		    </div>
+		</a>
+	    {% else %}
+		nothing
+	    {% endfor %}
+	</p>
+	</div>
+    </div>
+{% endblock %}
