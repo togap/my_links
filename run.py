@@ -1,6 +1,6 @@
 import settings
 from application import create_app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, url_for
 from application.models import User, Link, Tag
 from application.models import db
 from lxml import html, etree
@@ -37,11 +37,6 @@ def detail_link(id):
     link = Link.query.get(id)
     return render_template('links/detail.html', link=link)
 
-@app.route('/edit/<int:id>')
-def edit(id):
-    link = Link.query.get(id)
-    return render_template('links/edit.html', link=link)
-
 @app.route('/links/<int:link_id>/tags/<int:tag_id>/delete')
 def delete_link_tag(link_id, tag_id):
     tag = Tag.query.get(tag_id)
@@ -49,7 +44,7 @@ def delete_link_tag(link_id, tag_id):
     link.tags.remove(tag)
     db.session.add(link)
     db.session.commit()
-    return render_template('links/edit.html', link=link)
+    return redirect(url_for('attach_tag', id=link.id))
 
 @app.route('/links/<int:id>/attach', methods=['GET', 'POST'])
 def attach_tag(id):

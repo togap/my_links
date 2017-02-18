@@ -1,22 +1,32 @@
-<!Doctype html>
-<html lang="es">
-    <head>
-	<meta charset="utf-8">
-	<title>Attach Tag</title>
-    </head>
-    <body>
-	<h1>Add Tag</h1>
-	<form action="{{ url_for('attach_tag', id=link.id) }}" method="post">
-	    <input type="text" placeholder="copy your link" required name="tag">
-	    <button type="submit">add</button>
-	</form>
-	<section>
-	    <ul>
+{% extends "index.html" %}
+{% block title %}Attach Tag{% endblock %}
+{% block header %}{{ link.title }}{% endblock %}
+{% block content %}
+    <div class="row">
+	<div class="columns small-12">
+	    <form action="{{ url_for('attach_tag', id=link.id) }}" method="post">
+		<div class="row">
+		    <div class="columns small-9">
+	        	<input type="text" placeholder="write a tag" required name="tag">
+		    </div>
+		    <div class="columns small-3">
+	        	<button type="submit" class="button primary hollow">add</button>
+		    </div>
+		</div>
+	    </form>
+	</div>
+    </div>
+    <div class="row">
+	<div class="columns small-12">
+	    <ul class="no-bullet">
 	    	{% for tag in link.tags %}
-		    <li>{{ tag.name }}</li>
+		    <li>
+			<span class="label success">
+			    {{ tag.name }} <a href="{{ url_for('delete_link_tag', link_id=link.id, tag_id=tag.id) }}"><i class="fi-trash"></i></a>
+			</span>
+		    </li>
 	    	{% endfor %}
 	    </ul>
-	</section>
-	<a href="{{ url_for('links') }}">cancel</a>
-    </body>
-</html>
+	</div>
+    </div>
+{% endblock %}
