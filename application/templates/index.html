@@ -21,7 +21,12 @@
 	    <section id="responsive-menu">
 	    	<section class="top-bar-left">
 		    <ul class="dropdown menu" data-dropdown-menu>
-		    	<li><a href="{{ url_for('links') }}">links</a></li>
+		    	<li>
+			    <a href="{{ url_for('links') }}">links</a>
+			    <ul class="menu vertical">
+	   			<li><a href="{{ url_for('archived_links') }}">archived</a></li>
+			    </ul>
+			</li>
 	    		<li><a href="{{ url_for('tags') }}">tags</a></li>
 		    </ul>
 	    	</section>
