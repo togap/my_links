@@ -85,16 +85,16 @@ def delete_link(id):
 @app.route('/links/<int:id>/favorite')
 def favorite_link(id):
     link = Link.query.get(id)
-    link.favorite = True
+    link.favorite = not link.favorite
     db.session.commit()
-    return redirect('/links')
+    return redirect(request.referrer)
 
 @app.route('/links/<int:id>/archived')
 def archived_link(id):
     link = Link.query.get(id)
-    link.state = True
+    link.state = not link.state
     db.session.commit()
-    return redirect('/links')
+    return redirect(request.referrer)
 
 @app.route('/tags')
 def tags():
