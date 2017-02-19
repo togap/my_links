@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+{% block title %} {{ link.title }} {% endblock %}
+{% block header %} {{ link.title }} {% endblock %}
+{% block content %}
+    <div class="row">
+	<div class="columns small-12">
+    	    <p><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></p>
+	    <hr>
+	    <p>
+	    	{% for tag in link.tags %}
+	    	<span class="label secondary">{{ tag.name }}</span>
+		{% else %}
+	    	No tiene etiquetas asignadas
+		{% endfor %}
+	    </p>
+	</div>
+    </div>
+{% endblock %}

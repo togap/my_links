@@ -42,6 +42,7 @@ class User(db.Model):
 
 class Link(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200))
     url = db.Column(db.Text)
     state = db.Column(db.Boolean)
     favorite = db.Column(db.Boolean)
@@ -49,11 +50,12 @@ class Link(db.Model):
     user = db.relationship('User',
             backref=db.backref('links', lazy='dynamic'))
     tags = db.relationship('Tag', secondary=tags,
-            backref=db.backref('links', lazy='dynamic'))
+            back_populates='links')
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
-    def __init__(self, url, user):
+    def __init__(self, title, url, user):
+        self.title = title
         self.url = url
         self.user = user
         self.state = False
@@ -62,7 +64,7 @@ class Link(db.Model):
         self.updated = None
 
     def __repr__(self):
-        return self.url
+        return self.title
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -70,12 +72,16 @@ class Tag(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User',
             backref=db.backref('tags', lazy='dynamic'))
+    links = db.relationship('Link', secondary=tags,
+            back_populates='tags')
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
     def __init__(self, name, user):
         self.name = name
         self.user = user
+        self.created = datetime.now()
+        self.updated = None
 
     def __repr__(self):
         return self.name

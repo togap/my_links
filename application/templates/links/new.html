@@ -1,10 +1,19 @@
-<!Doctype html>
-<html lang="es">
-    <head>
-	<meta charset="utf-8">
-	<title>New Link</title>
-    </head>
-    <body>
-	Crear un link
-    </body>
-</html>
+{% extends "index.html" %}
+{% block title %}New Link{% endblock %}
+{% block header %}Create a new Link{% endblock %}
+{% block content %}
+    <div class="row">
+	<div class="columns small-12">
+	    <form action="{{ url_for('new_link') }}" method="post">
+		<div class="row">
+		    <div class="columns small-9">
+	                <input type="text" placeholder="copy your link" required name="url">
+		    </div>
+		    <div class="columns small-3">
+	            	<button type="submit" class="button hollow expanded hollow">save</button>
+		    </div>
+		</div>
+	    </form>
+	</div>
+    </div>
+{% endblock %}

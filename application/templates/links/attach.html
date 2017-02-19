@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+{% block title %}Attach Tag{% endblock %}
+{% block header %}{{ link.title }}{% endblock %}
+{% block content %}
+    <div class="row">
+	<div class="columns small-12">
+	    <form action="{{ url_for('attach_tag', id=link.id) }}" method="post">
+		<div class="row">
+		    <div class="columns small-9">
+	        	<input type="text" placeholder="write a tag" required name="tag">
+		    </div>
+		    <div class="columns small-3">
+	        	<button type="submit" class="button primary hollow expanded">add</button>
+		    </div>
+		</div>
+	    </form>
+	</div>
+    </div>
+    <div class="row">
+	<div class="columns small-12">
+	    <ul class="no-bullet">
+	    	{% for tag in link.tags %}
+		    <li>
+			<span class="label success">
+			    {{ tag.name }} <a href="{{ url_for('delete_link_tag', link_id=link.id, tag_id=tag.id) }}"><i class="fi-trash"></i></a>
+			</span>
+		    </li>
+	    	{% endfor %}
+	    </ul>
+	</div>
+    </div>
+{% endblock %}
