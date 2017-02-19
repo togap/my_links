@@ -8,7 +8,8 @@
 	        {% for tag in tags %}
 	            <li>
 			<span class="label success">
-			    <a href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a>
+			    <a href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a> 
+			    <a href="{{ url_for('delete_tag', id=tag.id) }}"><i class="fi-trash"></i></a>
 			</span>
 			<span class="badge success">{{ tag.links | length }}</span>
 			<span class="show-for-sr">links</span>
