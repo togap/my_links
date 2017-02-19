@@ -77,6 +77,13 @@ def favorite_link(id):
     db.session.commit()
     return redirect('/links')
 
+@app.route('/links/<int:id>/archived')
+def archived_link(id):
+    link = Link.query.get(id)
+    link.state = True
+    db.session.commit()
+    return redirect('/links')
+
 @app.route('/tags')
 def tags():
     tags = Tag.query.filter_by(user_id=1).all()
