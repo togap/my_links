@@ -38,6 +38,12 @@ def archived_links():
     links = Link.query.filter_by(**params).all()
     return render_template('links/list.html', links=links)
 
+@app.route('/links/favorites')
+def favorites_links():
+    params = {'user_id':1, 'favorite':True}
+    links = Link.query.filter_by(**params).all()
+    return render_template('links/list.html', links=links)
+
 @app.route('/links/<int:id>')
 def detail_link(id):
     link = Link.query.get(id)
