@@ -106,6 +106,13 @@ def detail_tag(id):
     tag = Tag.query.get(id)
     return render_template('tags/detail.html', tag=tag)
 
+@app.route('/tags/<int:id>/delete')
+def delete_tag(id):
+    tag = Tag.query.get(id)
+    db.session.delete(tag)
+    db.session.commit()
+    return redirect('/tags')
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
