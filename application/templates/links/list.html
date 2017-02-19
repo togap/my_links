@@ -9,11 +9,15 @@
 		    <div class="callout">
 			<p>
 			    <strong>{{ link.title }}</strong>
-			    <a class="hollow button warning float-right" href="{{ url_for('delete_link', id=link.id) }}">
+			    <a class="hollow button alert float-right" href="{{ url_for('delete_link', id=link.id) }}">
 				<span class="show-for-sr">delete</span>
 	 	                <span aria-hidden="true"><i class="fi-trash"></i></span>
 		            </a>
-	                    <a class="hollow button success float-right" href="{{ url_for('attach_tag', id=link.id) }}">
+	                    <a class="hollow button warning float-right" href="{{ url_for('favorite_link', id=link.id) }}">
+		                <span class="show-for-sr">favorite</span>
+		                <span aria-hidden="true"><i class="fi-star"></i></span>
+		            </a>
+	                    <a class="hollow button secondary float-right" href="{{ url_for('attach_tag', id=link.id) }}">
 		                <span class="show-for-sr">add tag</span>
 		                <span aria-hidden="true"><i class="fi-pricetag-multiple"></i></span>
 		            </a>
