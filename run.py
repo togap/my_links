@@ -5,6 +5,7 @@ from application.models import User, Link, Tag
 from application.models import db
 from lxml import html, etree
 import requests
+import string
 
 app = create_app(settings)
 
@@ -98,8 +99,18 @@ def archived_link(id):
 
 @app.route('/tags')
 def tags():
-    tags = Tag.query.filter_by(user_id=1).all()
-    return render_template('tags/list.html', tags=tags)
+    letters = string.ascii_lowercase
+    tags = Tag.query.filter_by(user_id=1).order_by(Tag.name).all()
+    o_tags = {}
+    for letter in letters:
+        o_tags[letter] = {'tags':[]}
+        for tag in tags:
+            if letter == tag.name[0]:
+                o_tags[letter]['tags'].append(tag)
+
+    print(o_tags)
+
+    return render_template('tags/list.html', o_tags=o_tags)
 
 @app.route('/tags/<int:id>')
 def detail_tag(id):
