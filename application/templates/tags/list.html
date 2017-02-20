@@ -12,11 +12,12 @@
                         <div class="row">
 	                    <div class="columns small-12">
 			        <span class="label success">
-			    	    <a href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a> 
-			    	    <a href="{{ url_for('delete_tag', id=tag.id) }}"><i class="fi-trash"></i></a>
+				    <strong>
+				    	<a href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a> 
+				    	({{ tag.links | length }})
+			    	    	<a href="{{ url_for('delete_tag', id=tag.id) }}"><i class="fi-x"></i></a>
+				    </strong>
 			        </span>
-			        <span class="badge success">{{ tag.links | length }}</span>
-			        <span class="show-for-sr">links</span>
 		            </div>
     		        </div>
 			<br>
