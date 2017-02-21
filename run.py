@@ -20,8 +20,24 @@ def new_link():
         page = requests.get(url)
         text = html.fromstring(page.content)
         title = text.xpath('//head/title/text()')[0]
-        description = text.xpath('//meta[@name="description"]/@content')[0]
-        author = text.xpath('//meta[@name="author"]/@content')[0]
+        if len(text.xpath('//meta[@name="description"]/@content')) > 0:
+            description = text.xpath('//meta[@name="description"]/@content')[0]
+        elif len(text.xpath('//meta[@name="Description"]/@content')) > 0:
+            description = text.xpath('//meta[@name="Description"]/@content')[0]
+        elif len(text.xpath('//meta[@name="DESCRIPTION"]/@content')) > 0:
+            description = text.xpath('//meta[@name="DESCRIPTION"]/@content')[0]
+        else:
+            description = None
+
+        if len(text.xpath('//meta[@name="author"]/@content')) > 0:
+            author = text.xpath('//meta[@name="author"]/@content')[0]
+        elif len(text.xpath('//meta[@name="Author"]/@content')) > 0:
+            author = text.xpath('//meta[@name="Author"]/@content')[0]
+        elif len(text.xpath('//meta[@name="AUTHOR"]/@content')) > 0:
+            author = text.xpath('//meta[@name="AUTHOR"]/@content')[0]
+        else:
+            author = None
+
         user = User.query.filter_by(id=1).first()
         link = Link(title, url, description, author, user)
         db.session.add(link)
