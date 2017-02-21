@@ -4,17 +4,26 @@
 {% block content %}
     <div class="row">
 	<div class="columns small-12">
-	    <ul class="no-bullet">
-	        {% for tag in tags %}
-	            <li>
-			<span class="label success">
-			    <a href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a>
-			</span>
-			<span class="badge success">{{ tag.links | length }}</span>
-			<span class="show-for-sr">links</span>
-		    </li>
-	        {% endfor %}
-	    </ul>
+            {% for letter, tags in o_tags.items() %}
+	    	{% if tags['tags'] | length != 0 %}
+		    <h6 class="subheader">{{ letter }}</h6>
+		    <hr>
+		    {% for tag in tags['tags'] %}
+                        <div class="row">
+	                    <div class="columns small-12">
+			        <span class="label success">
+				    <strong>
+				    	<a href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a> 
+				    	({{ tag.links | length }})
+			    	    	<a href="{{ url_for('delete_tag', id=tag.id) }}"><i class="fi-x"></i></a>
+				    </strong>
+			        </span>
+		            </div>
+    		        </div>
+			<br>
+		    {% endfor %}
+	        {% endif %}
+    	    {% endfor %}
 	</div>
     </div>
 {% endblock %}

@@ -4,8 +4,12 @@
 {% block content %}
     <div class="row">
 	<div class="columns small-12">
-    	    <p><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></p>
-	    <hr>
+	    <p>
+	    	{% if link.author %}
+	    	    <strong>{{ link.author }},</strong> 
+		{% endif %}
+		<a href="{{ link.url }}" target="_blank">{{ link.url }}</a>
+	    </p>
 	    <p>
 	    	{% for tag in link.tags %}
 	    	<span class="label secondary">{{ tag.name }}</span>
@@ -13,6 +17,10 @@
 	    	No tiene etiquetas asignadas
 		{% endfor %}
 	    </p>
+	    <hr>
+	    {% if link.description %}
+	    	<p>{{ link.description }}</p>
+	    {% endif %}
 	</div>
     </div>
 {% endblock %}

@@ -5,6 +5,7 @@ from application.models import User, Link, Tag
 from application.models import db
 from lxml import html, etree
 import requests
+import string
 
 app = create_app(settings)
 
@@ -18,9 +19,27 @@ def new_link():
         url = request.form['url']
         page = requests.get(url)
         text = html.fromstring(page.content)
-        title = text.xpath('//head/title/text()')
+        title = text.xpath('//head/title/text()')[0]
+        if len(text.xpath('//meta[@name="description"]/@content')) > 0:
+            description = text.xpath('//meta[@name="description"]/@content')[0]
+        elif len(text.xpath('//meta[@name="Description"]/@content')) > 0:
+            description = text.xpath('//meta[@name="Description"]/@content')[0]
+        elif len(text.xpath('//meta[@name="DESCRIPTION"]/@content')) > 0:
+            description = text.xpath('//meta[@name="DESCRIPTION"]/@content')[0]
+        else:
+            description = None
+
+        if len(text.xpath('//meta[@name="author"]/@content')) > 0:
+            author = text.xpath('//meta[@name="author"]/@content')[0]
+        elif len(text.xpath('//meta[@name="Author"]/@content')) > 0:
+            author = text.xpath('//meta[@name="Author"]/@content')[0]
+        elif len(text.xpath('//meta[@name="AUTHOR"]/@content')) > 0:
+            author = text.xpath('//meta[@name="AUTHOR"]/@content')[0]
+        else:
+            author = None
+
         user = User.query.filter_by(id=1).first()
-        link = Link(title[0], url, user)
+        link = Link(title, url, description, author, user)
         db.session.add(link)
         db.session.commit()
         return redirect('/links')
@@ -98,13 +117,30 @@ def archived_link(id):
 
 @app.route('/tags')
 def tags():
-    tags = Tag.query.filter_by(user_id=1).all()
-    return render_template('tags/list.html', tags=tags)
+    letters = string.ascii_lowercase
+    tags = Tag.query.filter_by(user_id=1).order_by(Tag.name).all()
+    o_tags = {}
+    for letter in letters:
+        o_tags[letter] = {'tags':[]}
+        for tag in tags:
+            if letter == tag.name[0]:
+                o_tags[letter]['tags'].append(tag)
+
+    print(o_tags)
+
+    return render_template('tags/list.html', o_tags=o_tags)
 
 @app.route('/tags/<int:id>')
 def detail_tag(id):
     tag = Tag.query.get(id)
     return render_template('tags/detail.html', tag=tag)
+
+@app.route('/tags/<int:id>/delete')
+def delete_tag(id):
+    tag = Tag.query.get(id)
+    db.session.delete(tag)
+    db.session.commit()
+    return redirect('/tags')
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
