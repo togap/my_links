@@ -6,7 +6,7 @@
 	<div class="columns small-12">
             {% for letter, tags in o_tags.items() %}
 	    	{% if tags['tags'] | length != 0 %}
-		    <p>{{ letter }}</p>
+		    <h6 class="subheader">{{ letter }}</h6>
 		    <hr>
 		    {% for tag in tags['tags'] %}
                         <div class="row">
