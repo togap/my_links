@@ -44,6 +44,8 @@ class Link(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200))
     url = db.Column(db.Text)
+    description = db.Column(db.Text)
+    author = db.Column(db.String(100))
     state = db.Column(db.Boolean)
     favorite = db.Column(db.Boolean)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -54,9 +56,11 @@ class Link(db.Model):
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
-    def __init__(self, title, url, user):
+    def __init__(self, title, url, description, author, user):
         self.title = title
         self.url = url
+        self.description = description
+        self.author = author
         self.user = user
         self.state = False
         self.favorite = False

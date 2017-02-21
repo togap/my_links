@@ -19,9 +19,11 @@ def new_link():
         url = request.form['url']
         page = requests.get(url)
         text = html.fromstring(page.content)
-        title = text.xpath('//head/title/text()')
+        title = text.xpath('//head/title/text()')[0]
+        description = text.xpath('//meta[@name="description"]/@content')[0]
+        author = text.xpath('//meta[@name="author"]/@content')[0]
         user = User.query.filter_by(id=1).first()
-        link = Link(title[0], url, user)
+        link = Link(title, url, description, author, user)
         db.session.add(link)
         db.session.commit()
         return redirect('/links')
