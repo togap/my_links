@@ -15,8 +15,7 @@ class User(db.Model):
     username = db.Column(db.String(20), unique=True)
     password = db.Column(db.String(10))
     email = db.Column(db.String(20), unique=True)
-    bio = db.Column(db.Text)
-    name = db.Column(db.String(100))
+    first_name = db.Column(db.String(100))
     last_name = db.Column(db.String(30))
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
@@ -27,12 +26,11 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-    def __init__(self, username, password, email, bio, name, last_name):
+    def __init__(self, username, password, email, first_name, last_name):
         self.username = username
         self.password = password
         self.email = email
-        self.bio = bio
-        self.name = name
+        self.first_name = first_name
         self.last_name = last_name
         self.created = datetime.now()
         self.updated = None
