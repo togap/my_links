@@ -155,5 +155,12 @@ def search():
         return render_template('search/index.html', links=links)
     return render_template('search/index.html')
 
+@app.route('/users/new', methods=['GET', 'POST'])
+def new_user():
+    if request.method == 'POST':
+        print('post')
+
+    return render_template('register/index.html')
+
 if __name__ == '__main__':
     app.run()
