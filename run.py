@@ -158,7 +158,14 @@ def search():
 @app.route('/users/new', methods=['GET', 'POST'])
 def new_user():
     if request.method == 'POST':
-        print('post')
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        user = User(username, password, email, first_name, last_name)
+        db.session.add(user)
+        db.session.commit()
 
     return render_template('register/index.html')
 

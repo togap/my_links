@@ -15,7 +15,7 @@ class User(db.Model):
     username = db.Column(db.String(20), unique=True)
     password = db.Column(db.String(10))
     email = db.Column(db.String(20), unique=True)
-    first_name = db.Column(db.String(100))
+    first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(30))
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
