@@ -11,7 +11,7 @@ app = create_app(settings)
 
 @app.route('/')
 def index():
-    return redirect('/links')
+    return render_template('login/index.html')
 
 @app.route('/links/new', methods=['GET', 'POST'])
 def new_link():
