@@ -33,9 +33,13 @@ def index():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        remember_me = False
+        if 'remember_me' in request.form:
+            remember_me = True
         user = check_auth(username, password)
         if not user is None:
-            login_user(user)
+            print(remember_me)
+            login_user(user, remember = remember_me)
             return redirect(request.args.get('next') or url_for('links'))
 
     return render_template('login/index.html')
