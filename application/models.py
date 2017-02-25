@@ -26,6 +26,18 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+
     def __init__(self, username, password, email, first_name, last_name):
         self.username = username
         self.set_password(password)
@@ -36,7 +48,7 @@ class User(db.Model):
         self.updated = None
 
     def __repr__(self):
-        return self.username
+        return '<User {}>'.format(self.username)
 
 class Link(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -66,7 +78,7 @@ class Link(db.Model):
         self.updated = None
 
     def __repr__(self):
-        return self.title
+        return '<Link {}>'.format(self.title)
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -86,4 +98,4 @@ class Tag(db.Model):
         self.updated = None
 
     def __repr__(self):
-        return self.name
+        return '<Tag {}>'.format(self.name)
