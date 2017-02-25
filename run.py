@@ -216,7 +216,7 @@ def new_user():
         db.session.add(user)
         db.session.commit()
 
-    return render_template('register/index.html')
+    return render_template('users/index.html')
 
 if __name__ == '__main__':
     app.run()
