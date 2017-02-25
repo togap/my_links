@@ -36,7 +36,7 @@ class User(db.Model):
         return False
 
     def get_id(self):
-        return unicode(self.id)
+        return self.id
 
     def __init__(self, username, password, email, first_name, last_name):
         self.username = username

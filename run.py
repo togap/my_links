@@ -1,17 +1,50 @@
 import settings
 from application import create_app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from application.models import User, Link, Tag
 from application.models import db
 from lxml import html, etree
 import requests
 import string
+from functools import wraps
+from flask_login import login_user, login_required, logout_user, LoginManager
 
 app = create_app(settings)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'index'
 
-@app.route('/')
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+def check_auth(username, password):
+    user = User.query.filter_by(username=username).first()
+    if user != None:
+        if user.check_password(password):
+            return user
+    return None
+
+def authenticate():
+    return redirect('/')
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = check_auth(username, password)
+        if not user is None:
+            login_user(user)
+            return redirect(url_for('links') or request.args.get('next'))
+
     return render_template('login/index.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.route('/links/new', methods=['GET', 'POST'])
 def new_link():
@@ -47,6 +80,7 @@ def new_link():
     return render_template('links/new.html')
 
 @app.route('/links')
+@login_required
 def links():
     links = Link.query.filter_by(user_id=1).all()
     return render_template('links/list.html', links=links)
