@@ -21,20 +21,30 @@
 	    <section id="responsive-menu">
 	    	<section class="top-bar-left">
 		    <ul class="dropdown menu" data-dropdown-menu>
-		    	<li>
-			    <a href="{{ url_for('links') }}">links</a>
-			    <ul class="menu vertical">
-	   			<li><a href="{{ url_for('archived_links') }}">archived</a></li>
-				<li><a href="{{ url_for('favorites_links') }}">favorites</a></li>
-			    </ul>
-			</li>
-	    		<li><a href="{{ url_for('tags') }}">tags</a></li>
+			{% if current_user.is_authenticated %}
+		    	    <li>
+			        <a href="{{ url_for('links') }}">links</a>
+			        <ul class="menu vertical">
+	   			    <li><a href="{{ url_for('archived_links') }}">archived</a></li>
+				    <li><a href="{{ url_for('favorites_links') }}">favorites</a></li>
+			        </ul>
+			    </li>
+	    		    <li><a href="{{ url_for('tags') }}">tags</a></li>
+			{% endif %}
 		    </ul>
 	    	</section>
 	    	<section class="top-bar-right">
 		    <ul class="dropdown menu" data-dropdown-menu>
-			<li><a href="{{ url_for('search') }}"><i class="fi-magnifying-glass"></i></a></li>
-			<li><a href="{{ url_for('new_link') }}"><i class="fi-plus"></i></a></li>
+			{% if current_user.is_authenticated %}
+			    <li><a href="{{ url_for('search') }}"><i class="fi-magnifying-glass"></i></a></li>
+			    <li><a href="{{ url_for('new_link') }}"><i class="fi-plus"></i></a></li>
+			    <li>
+				<a href="#">{{ current_user.username }}</a>
+				<ul class="menu vertical">
+				    <li><a href="{{ url_for('logout') }}">logout</a></li>
+				</ul>
+			    </li>
+			{% endif %}
 		    </ul>
 		</section>
 	    </section>

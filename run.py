@@ -1,6 +1,6 @@
 import settings
 from application import create_app
-from flask import render_template, request, redirect, url_for, session, g, flash
+from flask import render_template, request, redirect, url_for, session
 from application.models import User, Link, Tag
 from application.models import db
 from lxml import html, etree
@@ -13,10 +13,6 @@ app = create_app(settings)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'index'
-
-@app.before_request
-def before_request():
-    g.user = current_user
 
 @login_manager.user_loader
 def load_user(id):
