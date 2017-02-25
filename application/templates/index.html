@@ -11,7 +11,7 @@
 	{% block style %}{% endblock %}
     </head>
     <body>
-	<nav class="top-bar stacked-for-medium">
+	<nav class="top-bar stacked-for-medium" style="background-color:#fefefe;">
 	    <section class="top-bar-title">
 		<span data-responsive-toggle="responsive-menu" data-hide-for="medium">
 		    <button class="menu-icon dark" type="button" data-toggle></button>
@@ -20,11 +20,11 @@
 	    </section>
 	    <section id="responsive-menu">
 	    	<section class="top-bar-left">
-		    <ul class="dropdown menu" data-dropdown-menu>
+		    <ul class="dropdown menu" data-dropdown-menu style="background-color:#fefefe;">
 			{% if current_user.is_authenticated %}
 		    	    <li>
 			        <a href="{{ url_for('links') }}">links</a>
-			        <ul class="menu vertical">
+			        <ul class="menu vertical" style="background-color: #fefefe;">
 	   			    <li><a href="{{ url_for('archived_links') }}">archived</a></li>
 				    <li><a href="{{ url_for('favorites_links') }}">favorites</a></li>
 			        </ul>
@@ -34,13 +34,13 @@
 		    </ul>
 	    	</section>
 	    	<section class="top-bar-right">
-		    <ul class="dropdown menu" data-dropdown-menu>
+		    <ul class="dropdown menu" data-dropdown-menu style="background-color:#fefefe;">
 			{% if current_user.is_authenticated %}
 			    <li><a href="{{ url_for('search') }}"><i class="fi-magnifying-glass"></i></a></li>
 			    <li><a href="{{ url_for('new_link') }}"><i class="fi-plus"></i></a></li>
 			    <li>
 				<a href="#">{{ current_user.username }}</a>
-				<ul class="menu vertical">
+				<ul class="menu vertical" style="background-color: #fefefe;">
 				    <li><a href="{{ url_for('logout') }}">logout</a></li>
 				</ul>
 			    </li>
