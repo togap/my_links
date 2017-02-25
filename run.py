@@ -1,18 +1,22 @@
 import settings
 from application import create_app
-from flask import render_template, request, redirect, url_for, session
+from flask import render_template, request, redirect, url_for, session, g, flash
 from application.models import User, Link, Tag
 from application.models import db
 from lxml import html, etree
 import requests
 import string
 from functools import wraps
-from flask_login import login_user, login_required, logout_user, LoginManager
+from flask_login import login_user, login_required, logout_user, LoginManager, current_user
 
 app = create_app(settings)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'index'
+
+@app.before_request
+def before_request():
+    g.user = current_user
 
 @login_manager.user_loader
 def load_user(id):
@@ -36,7 +40,7 @@ def index():
         user = check_auth(username, password)
         if not user is None:
             login_user(user)
-            return redirect(url_for('links') or request.args.get('next'))
+            return redirect(request.args.get('next') or url_for('links'))
 
     return render_template('login/index.html')
 
