@@ -26,7 +26,7 @@ def check_auth(username, password):
     return None
 
 def authenticate():
-    return redirect('/')
+    return redirect(url_for('index'))
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -47,6 +47,7 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/links/new', methods=['GET', 'POST'])
+@login_required
 def new_link():
     if request.method == 'POST':
         url = request.form['url']
@@ -75,7 +76,7 @@ def new_link():
         link = Link(title, url, description, author, user)
         db.session.add(link)
         db.session.commit()
-        return redirect('/links')
+        return redirect(url_for('links'))
         
     return render_template('links/new.html')
 
@@ -86,23 +87,27 @@ def links():
     return render_template('links/list.html', links=links)
 
 @app.route('/links/archived')
+@login_required
 def archived_links():
     params = {'user_id':1, 'state':True}
     links = Link.query.filter_by(**params).all()
     return render_template('links/list.html', links=links)
 
 @app.route('/links/favorites')
+@login_required
 def favorites_links():
     params = {'user_id':1, 'favorite':True}
     links = Link.query.filter_by(**params).all()
     return render_template('links/list.html', links=links)
 
 @app.route('/links/<int:id>')
+@login_required
 def detail_link(id):
     link = Link.query.get(id)
     return render_template('links/detail.html', link=link)
 
 @app.route('/links/<int:link_id>/tags/<int:tag_id>/delete')
+@login_required
 def delete_link_tag(link_id, tag_id):
     tag = Tag.query.get(tag_id)
     link = Link.query.get(link_id)
@@ -112,6 +117,7 @@ def delete_link_tag(link_id, tag_id):
     return redirect(url_for('attach_tag', id=link.id))
 
 @app.route('/links/<int:id>/attach', methods=['GET', 'POST'])
+@login_required
 def attach_tag(id):
     link = Link.query.get(id)
     if request.method == 'POST':
@@ -129,13 +135,15 @@ def attach_tag(id):
     return render_template('links/attach.html', link=link)
 
 @app.route('/links/<int:id>/delete')
+@login_required
 def delete_link(id):
     link = Link.query.get(id)
     db.session.delete(link)
     db.session.commit()
-    return redirect('/links')
+    return redirect(url_for('links'))
 
 @app.route('/links/<int:id>/favorite')
+@login_required
 def favorite_link(id):
     link = Link.query.get(id)
     link.favorite = not link.favorite
@@ -143,6 +151,7 @@ def favorite_link(id):
     return redirect(request.referrer)
 
 @app.route('/links/<int:id>/archived')
+@login_required
 def archived_link(id):
     link = Link.query.get(id)
     link.state = not link.state
@@ -150,6 +159,7 @@ def archived_link(id):
     return redirect(request.referrer)
 
 @app.route('/tags')
+@login_required
 def tags():
     letters = string.ascii_lowercase
     tags = Tag.query.filter_by(user_id=1).order_by(Tag.name).all()
@@ -160,23 +170,24 @@ def tags():
             if letter == tag.name[0]:
                 o_tags[letter]['tags'].append(tag)
 
-    print(o_tags)
-
     return render_template('tags/list.html', o_tags=o_tags)
 
 @app.route('/tags/<int:id>')
+@login_required
 def detail_tag(id):
     tag = Tag.query.get(id)
     return render_template('tags/detail.html', tag=tag)
 
 @app.route('/tags/<int:id>/delete')
+@login_required
 def delete_tag(id):
     tag = Tag.query.get(id)
     db.session.delete(tag)
     db.session.commit()
-    return redirect('/tags')
+    return redirect(url_for('tags'))
 
 @app.route('/search', methods=['GET', 'POST'])
+@login_required
 def search():
     if request.method == 'POST':
         search = request.form['search']
