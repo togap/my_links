@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+{% block title %}Register new user{% endblock %}
+{% block header %}New User{% endblock %}
+{% block content %}
+    <fieldset class="fieldset">
+	<legend>Register</legend>
+	<form method="post" action="{{ url_for('new_user') }}">
+	    <div class="row">
+		<div class="columns small-3">
+		    <label for="first_name" class="text-right middle">First Name:</label>
+		</div>
+		<div class="columns small-9">
+		    <input type="text" id="first_name" name="first_name" placeholder="write your first name" required />
+		</div>
+	    </div>
+	    <div class="row">
+		<div class="columns small-3">
+		    <label for="last_name" class="text-right middle">Last Name:</label>
+		</div>
+		<div class="columns small-9">
+		    <input type="text" id="last_name" name="last_name" placeholder="write your last name" required />
+		</div>
+	    </div>
+	    <div class="row">
+		<div class="columns small-3">
+		    <label for="email" class="text-right middle">Email:</label>
+		</div>
+		<div class="columns small-9">
+		    <input type="email" id="email" name="email" placeholder="write your email" required />
+		</div>
+	    </div>
+	    <div class="row">
+		<div class="columns small-3">
+		    <label for="username" class="text-right middle">Username:</label>
+		</div>
+		<div class="columns small-9">
+		    <input type="text" id="username" name="username" placeholder="write your username" required />
+		</div>
+	    </div>
+	    <div class="row">
+		<div class="columns small-3">
+		    <label for="password" class="text-right middle">Password:</label>
+		</div>
+		<div class="columns small-9">
+		    <input type="password" id="password" name="password" placeholder="********" required />
+		</div>
+	    </div>
+	    <div class="row">
+		<div class="columns small-12">
+		    <a href="{{ url_for('index') }}" class="button hollow float-left">cancel</a> 
+		    <button class="button hollow float-right" type="submit">save</button>
+		</div>
+	    </div>
+	</form>
+    </fieldset>
+{% endblock %}

@@ -13,10 +13,9 @@ tags = db.Table('link_tags',
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True)
-    password = db.Column(db.String(10))
+    password = db.Column(db.String(70))
     email = db.Column(db.String(20), unique=True)
-    bio = db.Column(db.Text)
-    name = db.Column(db.String(100))
+    first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(30))
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
@@ -27,18 +26,29 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-    def __init__(self, username, password, email, bio, name, last_name):
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+
+    def __init__(self, username, password, email, first_name, last_name):
         self.username = username
-        self.password = password
+        self.set_password(password)
         self.email = email
-        self.bio = bio
-        self.name = name
+        self.first_name = first_name
         self.last_name = last_name
         self.created = datetime.now()
         self.updated = None
 
     def __repr__(self):
-        return self.username
+        return '<User {}>'.format(self.username)
 
 class Link(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -68,7 +78,7 @@ class Link(db.Model):
         self.updated = None
 
     def __repr__(self):
-        return self.title
+        return '<Link {}>'.format(self.title)
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -88,4 +98,4 @@ class Tag(db.Model):
         self.updated = None
 
     def __repr__(self):
-        return self.name
+        return '<Tag {}>'.format(self.name)
