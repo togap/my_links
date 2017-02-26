@@ -4,23 +4,9 @@
 {% block content %}
     <div class="row">
 	<div class="columns small-12">
-	    {% for link in tag.links %}
-		<a href="{{ url_for('detail_link', id=link.id) }}">
-		    <div class="callout">
-			<p><strong>{{ link.title }}</strong></p>
-			<p>
-			    <a href="{{ link.url }}"><small>{{ link.url }}</small></a>
-			    {% for tag in link.tags %}
-			        <span class="label success">
-				    <a href="{{ url_for('detail_tag', id=tag.id) }}">
-					<small>{{ tag.name }}</small>
-				    </a>
-				</span>
-			    {% endfor %}
-			</p>
-		    </div>
-		</a>
-	    {% endfor %}
+	    {% with links=tag.links %}
+	    	{% include "partials/links.html" %}
+	    {% endwith %}
 	</div>
     </div>
 {% endblock %}

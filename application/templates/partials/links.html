@@ -1,0 +1,53 @@
+{% macro list(links=[]) %}
+    {% for link in links %}
+        <a href="{{ url_for('detail_link', id=link.id) }}">
+	    <div class="callout">
+	        <p>
+		    <strong style="color: #8a8a8a;">{{ link.title }}</strong>
+		    <a class="hollow button alert float-right" href="{{ url_for('delete_link', id=link.id) }}">
+		        <span class="show-for-sr">delete</span>
+	 	        <span aria-hidden="true"><i class="fi-trash"></i></span>
+		    </a>
+	            <a class="hollow button primary float-right" href="{{ url_for('attach_tag', id=link.id) }}">
+		        <span class="show-for-sr">add tag</span>
+		        <span aria-hidden="true"><i class="fi-pricetag-multiple"></i></span>
+		    </a>
+		    {% if not link.favorite %}
+	                <a class="hollow button warning float-right" href="{{ url_for('favorite_link', id=link.id) }}">
+		            <span class="show-for-sr">favorite</span>
+		            <span aria-hidden="true"><i class="fi-star"></i></span>
+		        </a>
+		    {% else %}
+	                <a class="button warning float-right" href="{{ url_for('favorite_link', id=link.id) }}">
+		            <span class="show-for-sr">favorite</span>
+		            <span aria-hidden="true"><i class="fi-star"></i></span>
+		        </a>
+		    {% endif %}
+		    {% if not link.state %}
+	                <a class="hollow button success float-right" href="{{ url_for('archived_link', id=link.id) }}">
+		            <span class="show-for-sr">archived</span>
+		            <span aria-hidden="true"><i class="fi-check"></i></span>
+		        </a>
+		    {% else %}
+	                <a class="button success float-right" href="{{ url_for('archived_link', id=link.id) }}">
+		            <span class="show-for-sr">archived</span>
+		            <span aria-hidden="true"><i class="fi-check"></i></span>
+		        </a>
+		    {% endif %}
+	        </p>
+	        <p>
+		    <a href="{{ link.url }}"><small>{{ link.url }}</small></a> 
+		    {% for tag in link.tags %}
+		        <span class="label primary">
+			    <a href="{{ url_for('detail_tag', id=tag.id) }}"><small style="color:white;">{{ tag.name }}</small></a>
+		        </span>
+		    {% endfor %}
+	        </p>
+	    </div>
+        </a>
+    {% else %}
+        <p>There is nothing <strong>:(</strong></p>
+    {% endfor %}
+{% endmacro %}
+
+{{ list(links) }}
