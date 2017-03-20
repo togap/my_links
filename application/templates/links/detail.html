@@ -19,7 +19,7 @@
 	    </p>
 	    <hr>
 	    {% if link.content %}
-	    	<div>{{ link.content }}</div>
+	    	<div>{{ link.content | safe }}</div>
 	    {% endif %}
 	</div>
     </div>
