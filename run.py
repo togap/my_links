@@ -3,7 +3,7 @@ from application import create_app
 from flask import render_template, request, redirect, url_for, session
 from application.models import User, Link, Tag
 from application.models import db
-from lxml import html, etree
+from lxml.html.clean import Cleaner
 import string
 from flask_login import login_user, login_required, logout_user, LoginManager, current_user
 from newspaper import Article
@@ -56,7 +56,9 @@ def new_link():
         article = Article(url, keep_article_html=True)
         article.download()
         article.parse()
-        content = article.article_html
+        cleaner = Cleaner(style=True, links=True, add_nofollow=True,
+                    page_structure=False, safe_attrs_only=False)
+        content = cleaner.clean_html(article.article_html)
         title = article.title
         image = article.top_image
         author = ', '.join(article.authors)
