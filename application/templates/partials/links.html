@@ -1,17 +1,24 @@
 {% macro list(links=[]) %}
     {% for link in links %}
-        <a href="{{ url_for('detail_link', id=link.id) }}">
-	    <div class="callout">
+    	<div class="media-object">
+	    <div class="media-object-section">
+		<div class="thumbnail">
+		    <img src="{{ link.image }}" alt="main image" height="70" width="70"/>
+		</div>
+	    </div>
+	    <div class="media-object-section">
+		<h6 class="subheader">{{ link.title }}</h6>
 	        <p>
-		    <strong style="color: #8a8a8a;">{{ link.title }}</strong>
-		    <a class="hollow button alert float-right" href="{{ url_for('delete_link', id=link.id) }}">
-		        <span class="show-for-sr">delete</span>
-	 	        <span aria-hidden="true"><i class="fi-trash"></i></span>
-		    </a>
-	            <a class="hollow button primary float-right" href="{{ url_for('attach_tag', id=link.id) }}">
-		        <span class="show-for-sr">add tag</span>
-		        <span aria-hidden="true"><i class="fi-pricetag-multiple"></i></span>
-		    </a>
+		    <a href="{{ link.url }}"><small>{{ link.url }}</small></a> 
+		    {% for tag in link.tags %}
+		        <span class="label primary">
+			    <a href="{{ url_for('detail_tag', id=tag.id) }}"><small style="color:white;">{{ tag.name }}</small></a>
+		        </span>
+		    {% endfor %}
+	        </p>
+	    </div>
+    	    <div class="media-object-section bottom">
+	        <p>
 		    {% if not link.favorite %}
 	                <a class="hollow button warning float-right" href="{{ url_for('favorite_link', id=link.id) }}">
 		            <span class="show-for-sr">favorite</span>
@@ -35,16 +42,18 @@
 		        </a>
 		    {% endif %}
 	        </p>
-	        <p>
-		    <a href="{{ link.url }}"><small>{{ link.url }}</small></a> 
-		    {% for tag in link.tags %}
-		        <span class="label primary">
-			    <a href="{{ url_for('detail_tag', id=tag.id) }}"><small style="color:white;">{{ tag.name }}</small></a>
-		        </span>
-		    {% endfor %}
-	        </p>
+		<p>
+		    <a class="hollow button alert float-right" href="{{ url_for('delete_link', id=link.id) }}">
+		        <span class="show-for-sr">delete</span>
+	 	        <span aria-hidden="true"><i class="fi-trash"></i></span>
+		    </a>
+	            <a class="hollow button primary float-right" href="{{ url_for('attach_tag', id=link.id) }}">
+		        <span class="show-for-sr">add tag</span>
+		        <span aria-hidden="true"><i class="fi-pricetag-multiple"></i></span>
+		    </a>
+		</p>
 	    </div>
-        </a>
+	</div>
     {% else %}
         <p>There is nothing <strong>:(</strong></p>
     {% endfor %}
