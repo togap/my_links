@@ -63,7 +63,7 @@ def new_link():
         image = article.top_image
         author = ', '.join(article.authors)
         publish_date = article.publish_date
-        user = User.query.filter_by(id=1).first()
+        user = User.query.filter_by(id=current_user.id).first()
         link = Link(title, url, content, publish_date, image, author, user)
         db.session.add(link)
         db.session.commit()
@@ -73,20 +73,20 @@ def new_link():
 @app.route('/links')
 @login_required
 def links():
-    links = Link.query.filter_by(user_id=1).all()
+    links = Link.query.filter_by(user_id=current_user.id).all()
     return render_template('links/list.html', links=links)
 
 @app.route('/links/archived')
 @login_required
 def archived_links():
-    params = {'user_id':1, 'state':True}
+    params = {'user_id':current_user.id, 'state':True}
     links = Link.query.filter_by(**params).all()
     return render_template('links/list.html', links=links)
 
 @app.route('/links/favorites')
 @login_required
 def favorites_links():
-    params = {'user_id':1, 'favorite':True}
+    params = {'user_id':current_user.id, 'favorite':True}
     links = Link.query.filter_by(**params).all()
     return render_template('links/list.html', links=links)
 
@@ -111,7 +111,7 @@ def delete_link_tag(link_id, tag_id):
 def attach_tag(id):
     link = Link.query.get(id)
     if request.method == 'POST':
-        user = User.query.filter_by(id=1).first()
+        user = User.query.filter_by(id=current_user.id).first()
         name = request.form['tag']
         tag = Tag.query.filter_by(name=name.lower()).first()
         if tag is None:
@@ -152,7 +152,7 @@ def archived_link(id):
 @login_required
 def tags():
     letters = string.ascii_lowercase
-    tags = Tag.query.filter_by(user_id=1).order_by(Tag.name).all()
+    tags = Tag.query.filter_by(user_id=current_user.id).order_by(Tag.name).all()
     o_tags = {}
     for letter in letters:
         o_tags[letter] = {'tags':[]}
