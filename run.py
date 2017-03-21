@@ -3,11 +3,10 @@ from application import create_app
 from flask import render_template, request, redirect, url_for, session
 from application.models import User, Link, Tag
 from application.models import db
-from lxml import html, etree
-import requests
+from lxml.html.clean import Cleaner
 import string
-from functools import wraps
 from flask_login import login_user, login_required, logout_user, LoginManager, current_user
+from newspaper import Article
 
 app = create_app(settings)
 login_manager = LoginManager()
@@ -41,7 +40,6 @@ def index():
             print(remember_me)
             login_user(user, remember = remember_me)
             return redirect(request.args.get('next') or url_for('links'))
-
     return render_template('login/index.html')
 
 @app.route('/logout')
@@ -55,52 +53,40 @@ def logout():
 def new_link():
     if request.method == 'POST':
         url = request.form['url']
-        page = requests.get(url)
-        text = html.fromstring(page.content)
-        title = text.xpath('//head/title/text()')[0]
-        if len(text.xpath('//meta[@name="description"]/@content')) > 0:
-            description = text.xpath('//meta[@name="description"]/@content')[0]
-        elif len(text.xpath('//meta[@name="Description"]/@content')) > 0:
-            description = text.xpath('//meta[@name="Description"]/@content')[0]
-        elif len(text.xpath('//meta[@name="DESCRIPTION"]/@content')) > 0:
-            description = text.xpath('//meta[@name="DESCRIPTION"]/@content')[0]
-        else:
-            description = None
-
-        if len(text.xpath('//meta[@name="author"]/@content')) > 0:
-            author = text.xpath('//meta[@name="author"]/@content')[0]
-        elif len(text.xpath('//meta[@name="Author"]/@content')) > 0:
-            author = text.xpath('//meta[@name="Author"]/@content')[0]
-        elif len(text.xpath('//meta[@name="AUTHOR"]/@content')) > 0:
-            author = text.xpath('//meta[@name="AUTHOR"]/@content')[0]
-        else:
-            author = None
-
-        user = User.query.filter_by(id=1).first()
-        link = Link(title, url, description, author, user)
+        article = Article(url, keep_article_html=True)
+        article.download()
+        article.parse()
+        cleaner = Cleaner(style=True, links=True, add_nofollow=True,
+                    page_structure=False, safe_attrs_only=False)
+        content = cleaner.clean_html(article.article_html)
+        title = article.title
+        image = article.top_image
+        author = ', '.join(article.authors)
+        publish_date = article.publish_date
+        user = User.query.filter_by(id=current_user.id).first()
+        link = Link(title, url, content, publish_date, image, author, user)
         db.session.add(link)
         db.session.commit()
         return redirect(url_for('links'))
-        
     return render_template('links/new.html')
 
 @app.route('/links')
 @login_required
 def links():
-    links = Link.query.filter_by(user_id=1).all()
+    links = Link.query.filter_by(user_id=current_user.id).all()
     return render_template('links/list.html', links=links)
 
 @app.route('/links/archived')
 @login_required
 def archived_links():
-    params = {'user_id':1, 'state':True}
+    params = {'user_id':current_user.id, 'state':True}
     links = Link.query.filter_by(**params).all()
     return render_template('links/list.html', links=links)
 
 @app.route('/links/favorites')
 @login_required
 def favorites_links():
-    params = {'user_id':1, 'favorite':True}
+    params = {'user_id':current_user.id, 'favorite':True}
     links = Link.query.filter_by(**params).all()
     return render_template('links/list.html', links=links)
 
@@ -125,7 +111,7 @@ def delete_link_tag(link_id, tag_id):
 def attach_tag(id):
     link = Link.query.get(id)
     if request.method == 'POST':
-        user = User.query.filter_by(id=1).first()
+        user = User.query.filter_by(id=current_user.id).first()
         name = request.form['tag']
         tag = Tag.query.filter_by(name=name.lower()).first()
         if tag is None:
@@ -166,14 +152,13 @@ def archived_link(id):
 @login_required
 def tags():
     letters = string.ascii_lowercase
-    tags = Tag.query.filter_by(user_id=1).order_by(Tag.name).all()
+    tags = Tag.query.filter_by(user_id=current_user.id).order_by(Tag.name).all()
     o_tags = {}
     for letter in letters:
         o_tags[letter] = {'tags':[]}
         for tag in tags:
             if letter == tag.name[0]:
                 o_tags[letter]['tags'].append(tag)
-
     return render_template('tags/list.html', o_tags=o_tags)
 
 @app.route('/tags/<int:id>')
@@ -215,7 +200,7 @@ def new_user():
         user = User(username, password, email, first_name, last_name)
         db.session.add(user)
         db.session.commit()
-
+        return redirect(url_for('index'))
     return render_template('users/index.html')
 
 if __name__ == '__main__':
