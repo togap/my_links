@@ -204,4 +204,4 @@ def new_user():
     return render_template('users/index.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
