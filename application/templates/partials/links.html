@@ -7,15 +7,25 @@
 		</div>
 	    </div>
 	    <div class="media-object-section">
-		<h6 class="subheader"><a href="{{ url_for('detail_link', id=link.id) }}">{{ link.title }}</a></h6>
+		{% if link.title | length > 110 %}
+		    <h6 class="subheader"><a href="{{ url_for('detail_link', id=link.id) }}">{{ link.title[0:110] }}</a></h6>
+		{% else %}
+		    <h6 class="subheader"><a href="{{ url_for('detail_link', id=link.id) }}">{{ link.title }}</a></h6>
+		{% endif %}
 	        <p>
-		    <a href="{{ link.url }}"><small>{{ link.url }}</small></a> 
+		    {% if link.url | length > 110 %}
+		    	<a href="{{ link.url }}"><small>{{ link.url[0:110] }} ...</small></a>
+		    {% else %}
+		    	<a href="{{ link.url }}"><small>{{ link.url }}</small></a>
+		    {% endif %}
+	        </p>
+		<p>
 		    {% for tag in link.tags %}
 		        <span class="label primary">
 			    <a href="{{ url_for('detail_tag', id=tag.id) }}"><small style="color:white;">{{ tag.name }}</small></a>
 		        </span>
 		    {% endfor %}
-	        </p>
+		</p>
 		<div class="button-group expanded">
 		    {% if not link.favorite %}
 	                <a class="hollow button warning" href="{{ url_for('favorite_link', id=link.id) }}">
