@@ -64,9 +64,9 @@ class Link(db.Model):
     favorite = db.Column(db.Boolean)
     user_id = db.Column(db.Integer, db.ForeignKey('myLinks_user.id'))
     user = db.relationship('User',
-            backref=db.backref('links', lazy='dynamic'))
+            backref=db.backref('links', lazy='dynamic'), cascade='save-update')
     tags = db.relationship('Tag', secondary=tags,
-            back_populates='links')
+            back_populates='links', cascade='all, delete-orphan')
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
@@ -92,9 +92,9 @@ class Tag(db.Model):
     name = db.Column(db.String(20))
     user_id = db.Column(db.Integer, db.ForeignKey('myLinks_user.id'))
     user = db.relationship('User',
-            backref=db.backref('tags', lazy='dynamic'))
+            backref=db.backref('tags', lazy='dynamic'), cascade='save-update')
     links = db.relationship('Link', secondary=tags,
-            back_populates='tags')
+            back_populates='tags', cascade='all, delete-orphan')
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
