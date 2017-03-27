@@ -11,6 +11,7 @@ tags = db.Table('link_tags',
     )
 
 class User(db.Model):
+    __tablename__ = 'myLinks_user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True)
     password = db.Column(db.String(70))
@@ -51,6 +52,7 @@ class User(db.Model):
         return '<User {}>'.format(self.username)
 
 class Link(db.Model):
+    __tablename__ = 'myLinks_link'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200))
     url = db.Column(db.Text)
@@ -85,6 +87,7 @@ class Link(db.Model):
         return '<Link {}>'.format(self.title)
 
 class Tag(db.Model):
+    __tablename__ = 'myLinks_tag'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
