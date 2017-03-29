@@ -37,7 +37,6 @@ def index():
             remember_me = True
         user = check_auth(username, password)
         if not user is None:
-            print(remember_me)
             login_user(user, remember = remember_me)
             return redirect(request.args.get('next') or url_for('links'))
     return render_template('login/index.html')
