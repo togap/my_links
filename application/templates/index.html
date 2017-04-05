@@ -1,67 +1,67 @@
 <!Doctype html>
 <html lang="es">
-    <head>
-	<meta charset="UTF-8">
-	<title>My Links | {% block title %}{% endblock %}</title>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Links | {% block title %}{% endblock %}</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='bower_components/foundation-sites/dist/css/foundation.min.css') }}" />
 	<link rel="stylesheet" href="{{ url_for('static', filename='bower_components/foundation-icon-fonts/foundation-icons.css') }}" />
 	<script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='bower_components/what-input/dist/what-input.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='bower_components/foundation-sites/dist/js/foundation.min.js') }}"></script>
 	{% block style %}{% endblock %}
-    </head>
-    <body>
-	<nav class="top-bar" style="background-color:#fefefe;">
-	    <section class="top-bar-title">
-		<span data-responsive-toggle="responsive-menu" data-hide-for="large">
-		    <button class="menu-icon dark" type="button" data-toggle></button>
-		</span>
-		<strong><a href="{{ url_for('links') }}">My Links</a></strong>
-	    </section>
-	    <section id="responsive-menu">
-	    	<section class="top-bar-left">
-		    <ul class="dropdown menu" data-dropdown-menu style="background-color:#fefefe;">
-			{% if current_user.is_authenticated %}
-		    	    <li>
-			        <a href="{{ url_for('links') }}">links</a>
-			        <ul class="menu vertical" style="background-color: #fefefe;">
-	   			    <li><a href="{{ url_for('archived_links') }}">archived</a></li>
-				    <li><a href="{{ url_for('favorites_links') }}">favorites</a></li>
-			        </ul>
-			    </li>
-	    		    <li><a href="{{ url_for('tags') }}">tags</a></li>
-			{% endif %}
-		    </ul>
-	    	</section>
-	    	<section class="top-bar-right">
-		    <ul class="dropdown menu" data-dropdown-menu style="background-color:#fefefe;">
-			{% if current_user.is_authenticated %}
-			    <li><a href="{{ url_for('search') }}"><i class="fi-magnifying-glass"></i></a></li>
-			    <li><a href="{{ url_for('new_link') }}"><i class="fi-plus"></i></a></li>
-			    <li>
-				<a href="#">{{ current_user.username }}</a>
-				<ul class="menu vertical" style="background-color: #fefefe;">
-				    <li><a href="{{ url_for('logout') }}">logout</a></li>
-				</ul>
-			    </li>
-			{% endif %}
-		    </ul>
-		</section>
-	    </section>
-	</nav>
-	<div class="section">
-	    <div class="row">
-		<div class="small-12 large-8 large-offset-2 columns">
-	            <h2 class="subheader">{% block header %}{% endblock %}</h2>
-		    <hr>
+  </head>
+  <body>
+	<section class="off-canvas-wrapper">
+	  <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+		<div class="off-canvas position-left reveal-for-large" id="myMenu" data-off-canvas data-position="left">
+		  <button class="close-button" aria-label="Close menu" type="button" data-close>
+		    <span aria-hidden="true">&times;</span>
+		  </button>
+		  <ul class="vertical menu">
+		    <li><h3><a href="{{ url_for('links') }}">My Links</a></h3></li>
+		    <li><hr></li>
+		    <li>
+		      <a href="{{ url_for('search') }}"><i class="fi-magnifying-glass"></i> search</a>
+		    </li>
+		    <li><a href="{{ url_for('new_link') }}"><i class="fi-plus"></i> add</a></li>
+			<li>
+			  <a href="{{ url_for('links') }}">links</a>
+			  <ul class="submenu menu vertical" data-submenu>
+	   			<li><a href="{{ url_for('archived_links') }}"><i class="fi-check"></i> archived</a></li>
+				<li><a href="{{ url_for('favorites_links') }}"><i class="fi-star"></i> favorites</a></li>
+		      </ul>
+			</li>
+			<li>
+			  <a href="{{ url_for('tags') }}"><i class="fi-pricetag-multiple"></i> tags</a>
+			</li>
+			<li>
+			  <a href="#"><i class="fi-torso"></i> {{ current_user.username }}</a>
+			  <ul class="submenu menu vertical">
+			    <li><a href="{{ url_for('logout') }}"> <i class="fi-power"></i> logout</a></li>
+			  </ul>
+		    </li>
+		  </ul>
 		</div>
-	    </div>
-	    <div class="row">
-		<div class="small-12 large-8 large-offset-2 columns">
-	            {% block content %}{% endblock %}
+		<div class="off-canvas-content" data-off-canvas-content>
+		  <div class="title-bar hide-for-large">
+		  	<div class="title-bar-left">
+		  	  <button class="menu-icon" type="button" data-open="myMenu"></button>
+		  	  <span class="title-bar-title">{% block view %}{% endblock %}</span>
+		  	</div>
+		  </div>
+		  <div class="section">
+		  	<div class="row small-12 large-8 large-offset-2 columns">
+		      <h2 class="subheader">{% block header %}{% endblock %}</h2>
+			  <hr>
+		    </div>
+		    <div class="row small-12 large-8 large-offset-2 columns">
+		      {% block content %}{% endblock %}
+		    </div>
+		  </div>
 		</div>
-	    </div>
-	<div>
+	  </div>
+    </section>
 	<footer></footer>
 	<script>
 	    $(document).foundation();

@@ -1,12 +1,9 @@
 {% extends "index.html" %}
 {% block title %}{{ tag.name }}{% endblock %}
 {% block header %}{{ tag.name }}{% endblock %}
+{% block view %}{{ tag.name }}{% endblock %}
 {% block content %}
-    <div class="row">
-	<div class="columns small-12">
-	    {% with links=tag.links %}
-	    	{% include "partials/links.html" %}
-	    {% endwith %}
-	</div>
-    </div>
+  {% with links=tag.links %}
+    {% include "partials/links.html" %}
+  {% endwith %}
 {% endblock %}
