@@ -1,0 +1,56 @@
+{% extends "partials/blank.html" %}
+{% block title %}Register new user{% endblock %}
+{% block header %}New User{% endblock %}
+{% block content %}
+  <fieldset class="fieldset">
+  <legend>Register</legend>
+  <form method="post" action="{{ url_for('new_user') }}">
+    <div class="row">
+	  <div class="columns medium-3 small-12">
+	    <label for="first_name" class="text-left middle">First Name:</label>
+	  </div>
+	  <div class="columns medium-9 small-12">
+	    <input type="text" id="first_name" name="first_name" placeholder="write your first name" required />
+	  </div>
+    </div>
+    <div class="row">
+	  <div class="columns medium-3 small-12">
+	    <label for="last_name" class="text-left middle">Last Name:</label>
+	  </div>
+	  <div class="columns medium-9 small-12">
+	    <input type="text" id="last_name" name="last_name" placeholder="write your last name" required />
+	  </div>
+    </div>
+    <div class="row">
+	  <div class="columns medium-3 small-12">
+	    <label for="email" class="text-left middle">Email:</label>
+	  </div>
+	  <div class="columns medium-9 small-12">
+	    <input type="email" id="email" name="email" placeholder="write your email" required />
+	  </div>
+    </div>
+    <div class="row">
+	  <div class="columns medium-3 small-12">
+	    <label for="username" class="text-left middle">Username:</label>
+	  </div>
+	  <div class="columns medium-9 small-12">
+	    <input type="text" id="username" name="username" placeholder="write your username" required />
+	  </div>
+    </div>
+    <div class="row">
+	  <div class="columns medium-3 small-12">
+	    <label for="password" class="text-left middle">Password:</label>
+	  </div>
+	  <div class="columns medium-9 small-12">
+	    <input type="password" id="password" name="password" placeholder="********" required />
+	  </div>
+    </div>
+    <div class="row">
+	  <div class="columns small-12 button-group expanded">
+	    <a href="{{ url_for('index') }}" class="button hollow">cancel</a>
+	    <button class="button hollow" type="submit">save</button>
+	  </div>
+    </div>
+  </form>
+  </fieldset>
+{% endblock %}

@@ -1,68 +1,66 @@
 {% macro list(links=[]) %}
-    {% for link in links %}
-    <div class="media-object">
-	    <div class="media-object-section middle">
-		<div class="thumbnail">
-		    <img src="{{ link.image }}" alt="main image" height="70" width="70"/>
-		</div>
-	    </div>
-	    <div class="media-object-section">
+  {% for link in links %}
+    <div class="media-object row columns small-12">
+	  <div class="media-object-section middle columns small-2">
+		<img class="thumbnail" src="{{ link.image }}" alt="main image" width="100%"/>
+	  </div>
+	  <div class="media-object-section columns small-10">
 		{% if link.title | length > 110 %}
-		    <h6 class="subheader"><a href="{{ url_for('detail_link', id=link.id) }}">{{ link.title[0:110] }}</a></h6>
+		  <h6 class="subheader"><a href="{{ url_for('detail_link', id=link.id) }}">{{ link.title[0:110] }}</a></h6>
 		{% else %}
-		    <h6 class="subheader"><a href="{{ url_for('detail_link', id=link.id) }}">{{ link.title }}</a></h6>
+		  <h6 class="subheader"><a href="{{ url_for('detail_link', id=link.id) }}">{{ link.title }}</a></h6>
 		{% endif %}
-	        <p>
+	      <p>
 		    {% if link.url | length > 110 %}
-		    	<a href="{{ link.url }}"><small>{{ link.url[0:110] }} ...</small></a>
+		      <a href="{{ link.url }}"><small>{{ link.url[0:110] }} ...</small></a>
 		    {% else %}
-		    	<a href="{{ link.url }}"><small>{{ link.url }}</small></a>
+		      <a href="{{ link.url }}"><small>{{ link.url }}</small></a>
 		    {% endif %}
-	        </p>
-		<p>
+	      </p>
+		  <p>
 		    {% for tag in link.tags %}
-		        <span class="label primary">
+		      <span class="label primary">
 			    <a href="{{ url_for('detail_tag', id=tag.id) }}"><small style="color:white;">{{ tag.name }}</small></a>
-		        </span>
+		      </span>
 		    {% endfor %}
-		</p>
-		<div class="button-group expanded">
+		  </p>
+		  <div class="button-group expanded">
 		    {% if not link.favorite %}
-	                <a class="hollow button warning" href="{{ url_for('favorite_link', id=link.id) }}">
-		            <span class="show-for-sr">favorite</span>
-		            <span aria-hidden="true"><i class="fi-star"></i></span>
-		        </a>
+	          <a class="hollow button warning" href="{{ url_for('favorite_link', id=link.id) }}">
+		        <span class="show-for-sr">favorite</span>
+		        <span aria-hidden="true"><i class="fi-star"></i></span>
+		      </a>
 		    {% else %}
-	                <a class="button warning" href="{{ url_for('favorite_link', id=link.id) }}">
-		            <span class="show-for-sr">favorite</span>
-		            <span aria-hidden="true"><i class="fi-star"></i></span>
-		        </a>
+	          <a class="button warning" href="{{ url_for('favorite_link', id=link.id) }}">
+		        <span class="show-for-sr">favorite</span>
+		        <span aria-hidden="true"><i class="fi-star"></i></span>
+		      </a>
 		    {% endif %}
 		    {% if not link.state %}
-	                <a class="hollow button success" href="{{ url_for('archived_link', id=link.id) }}">
-		            <span class="show-for-sr">archived</span>
-		            <span aria-hidden="true"><i class="fi-check"></i></span>
-		        </a>
+	          <a class="hollow button success" href="{{ url_for('archived_link', id=link.id) }}">
+		        <span class="show-for-sr">archived</span>
+		        <span aria-hidden="true"><i class="fi-check"></i></span>
+		      </a>
 		    {% else %}
-	                <a class="button success" href="{{ url_for('archived_link', id=link.id) }}">
-		            <span class="show-for-sr">archived</span>
-		            <span aria-hidden="true"><i class="fi-check"></i></span>
-		        </a>
+	          <a class="button success" href="{{ url_for('archived_link', id=link.id) }}">
+		        <span class="show-for-sr">archived</span>
+		        <span aria-hidden="true"><i class="fi-check"></i></span>
+		      </a>
 		    {% endif %}
 		    <a class="hollow button alert" href="{{ url_for('delete_link', id=link.id) }}">
-		        <span class="show-for-sr">delete</span>
-	 	        <span aria-hidden="true"><i class="fi-trash"></i></span>
+		      <span class="show-for-sr">delete</span>
+	 	      <span aria-hidden="true"><i class="fi-trash"></i></span>
 		    </a>
-	            <a class="hollow button primary" href="{{ url_for('attach_tag', id=link.id) }}">
-		        <span class="show-for-sr">add tag</span>
-		        <span aria-hidden="true"><i class="fi-pricetag-multiple"></i></span>
+	        <a class="hollow button primary" href="{{ url_for('attach_tag', id=link.id) }}">
+		      <span class="show-for-sr">add tag</span>
+		      <span aria-hidden="true"><i class="fi-pricetag-multiple"></i></span>
 		    </a>
 		</div>
-	    </div>
+	  </div>
 	</div>
-    {% else %}
-        <p>There is nothing <strong>:(</strong></p>
-    {% endfor %}
+  {% else %}
+    <p>There is nothing <strong>:(</strong></p>
+  {% endfor %}
 {% endmacro %}
 
 {{ list(links) }}

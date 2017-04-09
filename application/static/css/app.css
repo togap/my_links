@@ -1,0 +1,47 @@
+/* *******************************
+ Variables for application
+ ******************************* */
+/* *******************************
+ CSS for application
+ ******************************* */
+body {
+  background: #fefefe; }
+
+#user-widget {
+  bottom: 0;
+  position: absolute;
+  text-align: center;
+  border-top: 0.4em solid;
+  border-top-color: #fefefe;
+  padding: 0.3em;
+  width: 100%; }
+  #user-widget a {
+    color: #fefefe; }
+
+#menu-header {
+  text-align: center;
+  border-bottom: 0.4em solid;
+  border-bottom-color: #fefefe; }
+  #menu-header a {
+    color: white; }
+
+/* *******************************
+ Overwriter Foundation class
+ ******************************* */
+.off-canvas {
+  background: #3adb76; }
+
+.close-button span {
+  color: #fefefe; }
+
+.title-bar {
+  background: #3adb76; }
+
+.submenu li a {
+  color: #fefefe;
+  font-weight: 700; }
+
+.menu li a {
+  font-weight: bold; }
+
+/*# sourceMappingURL=app.css.map */

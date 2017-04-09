@@ -1,0 +1,59 @@
+{% extends 'index.html' %}
+{% block main %}
+	<section class="off-canvas-wrapper">
+	  <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+			<div class="off-canvas position-left reveal-for-large" id="myMenu" data-off-canvas data-position="left">
+			  <button class="close-button" aria-label="Close menu" type="button" data-close>
+			    <span aria-hidden="true">&times;</span>
+			  </button>
+				<div id="menu-header">
+					<h3>
+						<a href="{{ url_for('links') }}">My Links</a>
+					</h3>
+				</div>
+			  <ul class="vertical menu">
+			    <li>
+						<a href="#">Options</a>
+						<ul class="submenu menu vertical" data-submenu>
+							<li>
+					      <a href="{{ url_for('search') }}"><i class="fi-magnifying-glass"></i> search</a>
+					    </li>
+					    <li>
+								<a href="{{ url_for('new_link') }}"><i class="fi-plus"></i> add</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+					  <a href="#">Lists</a>
+					  <ul class="submenu menu vertical" data-submenu>
+			   			<li><a href="{{ url_for('links') }}"><i class="fi-link"></i> links</a></li>
+			   			<li><a href="{{ url_for('archived_links') }}"><i class="fi-check"></i> archived</a></li>
+							<li><a href="{{ url_for('favorites_links') }}"><i class="fi-star"></i> favorites</a></li>
+							<li><a href="{{ url_for('tags') }}"><i class="fi-pricetag-multiple"></i> tags</a></li>
+				    </ul>
+					</li>
+				</ul>
+				<div id="user-widget">
+					<h4><a href="{{ url_for('logout') }}"><i class="fi-torso"></i> {{ current_user.username }}</a></h4>
+				</div>
+			</div>
+			<div class="off-canvas-content" data-off-canvas-content>
+			  <div class="title-bar hide-for-large">
+			  	<div class="title-bar-left">
+			  	  <button class="menu-icon" type="button" data-open="myMenu"></button>
+			  	  <span class="title-bar-title">{% block view %}{% endblock %}</span>
+			  	</div>
+			  </div>
+			  <div class="section">
+			  	<div class="row small-12 large-8 large-offset-2 columns">
+			      <h2 class="subheader">{% block header %}{% endblock %}</h2>
+				  <hr>
+			    </div>
+			    <div class="row small-12 large-8 large-offset-2 columns">
+			      {% block content %}{% endblock %}
+			    </div>
+			 </div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
