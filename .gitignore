@@ -2,3 +2,4 @@ __pycache__/*
 migrations/*
 settings.py
 *.db
+.sass-cache/*

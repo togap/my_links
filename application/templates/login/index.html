@@ -1,25 +1,25 @@
-{% extends "index.html" %}
+{% extends "partials/blank.html" %}
 {% block title %}Login{% endblock %}
 {% block header %}Login{% endblock %}
 {% block content %}
     <div class="row">
-	<div class="columns small-6 small-offset-3">
+	<div class="columns large-8 large-offset-2 small-12">
 	    <fieldset class="fieldset">
 		<legend>Credentials</legend>
 		<form action="{{ url_for('index') }}" method="post">
 		    <div class="row">
-			<div class="columns small-3">
-			    <label class="text-right middle" for="username">Username</label>
+			<div class="columns large-3 small-12">
+			    <label class="text-left middle" for="username">Username:</label>
 			</div>
-			<div class="columns small-9">
+			<div class="columns large-9 small-12">
 			    <input type="text" id="username" name="username" placeholder="username" required />
 			</div>
 		    </div>
 		    <div class="row">
-			<div class="columns small-3">
-			    <label class="text-right middle" for="password">Password</label>
+			<div class="columns large-3 small-12">
+			    <label class="text-left middle" for="password">Password:</label>
 			</div>
-			<div class="columns small-9">
+			<div class="columns large-9 small-12">
 			    <input type="password" id="password" name="password" placeholder="password" required />
 			</div>
 		    </div>
@@ -30,7 +30,7 @@
 		    </div>
 		    <div class="row">
 			<div class="columns small-12">
-			    <button class="button hollow float-right" type="submit">login</button>
+			    <button class="button hollow expanded" type="submit">login</button>
 			</div>
 		    </div>
 		    <div class="row">

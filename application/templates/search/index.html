@@ -1,24 +1,17 @@
-{% extends "index.html" %}
+{% extends "partials/menu.html" %}
 {% block title %}Search{% endblock %}
 {% block header %}Serch{% endblock %}
+{% block view %}Serch{% endblock %}
 {% block content %}
-    <div class="row">
-	<div class="columns small-12">
-	    <form method="post" action="{{ url_for('search') }}">
-		<div class="row">
-		    <div class="columns small-9">
-	        	<input type="text" placeholder="words, tags" name="search">
-		    </div>
-		    <div class="columns small-3">
-	        	<button type="submit" class="button primary hollow expanded">search</button>
-		    </div>
-		</div>
-	    </form>
+  <form class="row columns small-12" method="post" action="{{ url_for('search') }}">
+	<div class="row">
+	  <div class="columns small-9">
+        <input type="text" placeholder="words, tags" name="search">
+	  </div>
+	  <div class="columns small-3">
+        <button type="submit" class="button primary hollow expanded">search</button>
+	  </div>
 	</div>
-    </div>
-    <div class="row">
-	<div class="columns small-12">
-	    {% include "partials/links.html" %}
-	</div>
-    </div>
+  </form>
+  {% include "partials/links.html" %}
 {% endblock %}

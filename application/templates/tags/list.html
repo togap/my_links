@@ -1,32 +1,33 @@
-{% extends "index.html" %}
+{% extends "partials/menu.html" %}
 {% block title %}Tags{% endblock %}
 {% block header %}My Tags{% endblock %}
+{% block view %}My Tags{% endblock %}
 {% block content %}
-    <div class="row">
-	<div class="columns small-12">
-            {% for letter, tags in o_tags.items() %}
-	    	{% if tags['tags'] | length != 0 %}
-		    <h6 class="subheader">{{ letter }}</h6>
-		    {% for tag in tags['tags'] %}
-                        <div class="row">
-	                    <div class="columns small-12">
-			        <span class="label primary">
-				    <strong>
-				    	<a style="color:white;" href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a> 
-				    	({{ tag.links | length }})
-			    	    	<a style="color:white;" href="{{ url_for('delete_tag', id=tag.id) }}">
-					    <small>
-						<i class="fi-x"></i>
-					    </small>
+  <div class="row">
+    <div class="columns small-12">
+      {% for letter, tags in o_tags.items() %}
+	    {% if tags['tags'] | length != 0 %}
+		  <h6 class="subheader">{{ letter }}</h6>
+		  {% for tag in tags['tags'] %}
+            <div class="row">
+	          <div class="columns small-12">
+			    <span class="label primary">
+				  <strong>
+				    <a style="color:white;" href="{{ url_for('detail_tag', id=tag.id) }}">{{ tag.name }}</a> 
+				    ({{ tag.links | length }})
+			    	<a style="color:white;" href="{{ url_for('delete_tag', id=tag.id) }}">
+					  <small>
+					    <i class="fi-x"></i>
+					  </small>
 					</a>
-				    </strong>
-			        </span>
-		            </div>
-    		        </div>
+				  </strong>
+			    </span>
+		      </div>
+    		</div>
 			<br>
-		    {% endfor %}
-	        {% endif %}
-    	    {% endfor %}
+		  {% endfor %}
+	    {% endif %}
+      {% endfor %}
 	</div>
-    </div>
+  </div>
 {% endblock %}

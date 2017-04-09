@@ -37,7 +37,6 @@ def index():
             remember_me = True
         user = check_auth(username, password)
         if not user is None:
-            print(remember_me)
             login_user(user, remember = remember_me)
             return redirect(request.args.get('next') or url_for('links'))
     return render_template('login/index.html')
@@ -73,7 +72,8 @@ def new_link():
 @app.route('/links')
 @login_required
 def links():
-    links = Link.query.filter_by(user_id=current_user.id).all()
+    #links = Link.query.filter_by(user_id=current_user.id).all()
+    links = Link.query.filter_by(user_id=1).all()
     return render_template('links/list.html', links=links)
 
 @app.route('/links/archived')
@@ -116,7 +116,7 @@ def attach_tag(id):
         tag = Tag.query.filter_by(name=name.lower()).first()
         if tag is None:
             tag = Tag(name.lower(), user)
-            
+
         link.tags.append(tag)
         db.session.add(link)
         db.session.commit()
@@ -201,7 +201,7 @@ def new_user():
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('index'))
-    return render_template('users/index.html')
+    return render_template('users/new.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

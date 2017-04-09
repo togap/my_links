@@ -1,0 +1,71 @@
+/* *******************************
+ Variables for application
+ ******************************* */
+$primary-color-my-links: #fefefe;
+$secondary-color-my-links: #3adb76;
+
+/* *******************************
+ CSS for application
+ ******************************* */
+body{
+  background: $primary-color-my-links;
+}
+
+#user-widget{
+  bottom: 0;
+  position: absolute;
+  text-align: center;
+  border-top: 0.4em solid;
+  border-top-color: $primary-color-my-links;
+  padding: 0.3em;
+  width: 100%;
+
+  a{
+    color: $primary-color-my-links;
+  }
+}
+
+#menu-header{
+  text-align: center;
+  border-bottom: 0.4em solid;
+  border-bottom-color: $primary-color-my-links;
+
+  a{
+    color: white;
+  }
+}
+
+/* *******************************
+ Overwriter Foundation class
+ ******************************* */
+
+ .off-canvas{
+   background: $secondary-color-my-links;
+ }
+
+.close-button{
+  span{
+    color: $primary-color-my-links;
+  }
+}
+
+.title-bar{
+  background: $secondary-color-my-links;
+}
+
+.submenu{
+  li{
+    a{
+      color: $primary-color-my-links;
+      font-weight: 700;
+    }
+  }
+}
+
+.menu{
+  li{
+    a{
+      font-weight: bold;
+    }
+  }
+}
